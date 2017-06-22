@@ -1,0 +1,365 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="ejemploEmpresaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="cargo">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="descripcion" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="salario" Type="float" Nullable="false" />
+        </EntityType>
+        <EntityType Name="departamento">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="descripcion" Type="nvarchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="empleado">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idCargo" Type="int" Nullable="false" />
+          <Property Name="cedula" Type="nvarchar" MaxLength="12" Nullable="false" />
+          <Property Name="nombre" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="apellido" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="edad" Type="int" />
+        </EntityType>
+        <EntityType Name="empresa">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="descripcion" Type="nvarchar" MaxLength="300" Nullable="false" />
+        </EntityType>
+        <EntityType Name="municipio">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idDepartamento" Type="int" />
+          <Property Name="nombre" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="descripcion" Type="nvarchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="sucursal">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idMunicipio" Type="int" />
+          <Property Name="idEmpresa" Type="int" />
+          <Property Name="nombre" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="descripcion" Type="nvarchar" MaxLength="300" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__empleado__idCarg__1A14E395">
+          <End Role="cargo" Type="Self.cargo" Multiplicity="1" />
+          <End Role="empleado" Type="Self.empleado" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cargo">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="empleado">
+              <PropertyRef Name="idCargo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__municipio__idDep__0519C6AF">
+          <End Role="departamento" Type="Self.departamento" Multiplicity="0..1" />
+          <End Role="municipio" Type="Self.municipio" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="departamento">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="municipio">
+              <PropertyRef Name="idDepartamento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__sucursal__idEmpr__0EA330E9">
+          <End Role="empresa" Type="Self.empresa" Multiplicity="0..1" />
+          <End Role="sucursal" Type="Self.sucursal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="empresa">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="sucursal">
+              <PropertyRef Name="idEmpresa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__sucursal__idMuni__0DAF0CB0">
+          <End Role="municipio" Type="Self.municipio" Multiplicity="0..1" />
+          <End Role="sucursal" Type="Self.sucursal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="municipio">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="sucursal">
+              <PropertyRef Name="idMunicipio" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ejemploEmpresaModelStoreContainer">
+          <EntitySet Name="cargo" EntityType="Self.cargo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="departamento" EntityType="Self.departamento" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="empleado" EntityType="Self.empleado" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="empresa" EntityType="Self.empresa" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="municipio" EntityType="Self.municipio" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sucursal" EntityType="Self.sucursal" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__empleado__idCarg__1A14E395" Association="Self.FK__empleado__idCarg__1A14E395">
+            <End Role="cargo" EntitySet="cargo" />
+            <End Role="empleado" EntitySet="empleado" />
+          </AssociationSet>
+          <AssociationSet Name="FK__municipio__idDep__0519C6AF" Association="Self.FK__municipio__idDep__0519C6AF">
+            <End Role="departamento" EntitySet="departamento" />
+            <End Role="municipio" EntitySet="municipio" />
+          </AssociationSet>
+          <AssociationSet Name="FK__sucursal__idEmpr__0EA330E9" Association="Self.FK__sucursal__idEmpr__0EA330E9">
+            <End Role="empresa" EntitySet="empresa" />
+            <End Role="sucursal" EntitySet="sucursal" />
+          </AssociationSet>
+          <AssociationSet Name="FK__sucursal__idMuni__0DAF0CB0" Association="Self.FK__sucursal__idMuni__0DAF0CB0">
+            <End Role="municipio" EntitySet="municipio" />
+            <End Role="sucursal" EntitySet="sucursal" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ejemploEmpresaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="cargo">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="descripcion" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="salario" Type="Double" Nullable="false" />
+          <NavigationProperty Name="empleado" Relationship="Self.FK__empleado__idCarg__1A14E395" FromRole="cargo" ToRole="empleado" />
+        </EntityType>
+        <EntityType Name="departamento">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="descripcion" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="municipio" Relationship="Self.FK__municipio__idDep__0519C6AF" FromRole="departamento" ToRole="municipio" />
+        </EntityType>
+        <EntityType Name="empleado">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idCargo" Type="Int32" Nullable="false" />
+          <Property Name="cedula" Type="String" MaxLength="12" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="nombre" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="apellido" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="edad" Type="Int32" />
+          <NavigationProperty Name="cargo" Relationship="Self.FK__empleado__idCarg__1A14E395" FromRole="empleado" ToRole="cargo" />
+        </EntityType>
+        <EntityType Name="empresa">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="descripcion" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="sucursal" Relationship="Self.FK__sucursal__idEmpr__0EA330E9" FromRole="empresa" ToRole="sucursal" />
+        </EntityType>
+        <EntityType Name="municipio">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idDepartamento" Type="Int32" />
+          <Property Name="nombre" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="descripcion" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="departamento" Relationship="Self.FK__municipio__idDep__0519C6AF" FromRole="municipio" ToRole="departamento" />
+          <NavigationProperty Name="sucursal" Relationship="Self.FK__sucursal__idMuni__0DAF0CB0" FromRole="municipio" ToRole="sucursal" />
+        </EntityType>
+        <EntityType Name="sucursal">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idMunicipio" Type="Int32" />
+          <Property Name="idEmpresa" Type="Int32" />
+          <Property Name="nombre" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="descripcion" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="empresa" Relationship="Self.FK__sucursal__idEmpr__0EA330E9" FromRole="sucursal" ToRole="empresa" />
+          <NavigationProperty Name="municipio" Relationship="Self.FK__sucursal__idMuni__0DAF0CB0" FromRole="sucursal" ToRole="municipio" />
+        </EntityType>
+        <Association Name="FK__empleado__idCarg__1A14E395">
+          <End Role="cargo" Type="Self.cargo" Multiplicity="1" />
+          <End Role="empleado" Type="Self.empleado" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cargo">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="empleado">
+              <PropertyRef Name="idCargo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__municipio__idDep__0519C6AF">
+          <End Role="departamento" Type="Self.departamento" Multiplicity="0..1" />
+          <End Role="municipio" Type="Self.municipio" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="departamento">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="municipio">
+              <PropertyRef Name="idDepartamento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__sucursal__idEmpr__0EA330E9">
+          <End Role="empresa" Type="Self.empresa" Multiplicity="0..1" />
+          <End Role="sucursal" Type="Self.sucursal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="empresa">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="sucursal">
+              <PropertyRef Name="idEmpresa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__sucursal__idMuni__0DAF0CB0">
+          <End Role="municipio" Type="Self.municipio" Multiplicity="0..1" />
+          <End Role="sucursal" Type="Self.sucursal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="municipio">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="sucursal">
+              <PropertyRef Name="idMunicipio" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ejemploEmpresaEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="cargo" EntityType="Self.cargo" />
+          <EntitySet Name="departamento" EntityType="Self.departamento" />
+          <EntitySet Name="empleado" EntityType="Self.empleado" />
+          <EntitySet Name="empresa" EntityType="Self.empresa" />
+          <EntitySet Name="municipio" EntityType="Self.municipio" />
+          <EntitySet Name="sucursal" EntityType="Self.sucursal" />
+          <AssociationSet Name="FK__empleado__idCarg__1A14E395" Association="Self.FK__empleado__idCarg__1A14E395">
+            <End Role="cargo" EntitySet="cargo" />
+            <End Role="empleado" EntitySet="empleado" />
+          </AssociationSet>
+          <AssociationSet Name="FK__municipio__idDep__0519C6AF" Association="Self.FK__municipio__idDep__0519C6AF">
+            <End Role="departamento" EntitySet="departamento" />
+            <End Role="municipio" EntitySet="municipio" />
+          </AssociationSet>
+          <AssociationSet Name="FK__sucursal__idEmpr__0EA330E9" Association="Self.FK__sucursal__idEmpr__0EA330E9">
+            <End Role="empresa" EntitySet="empresa" />
+            <End Role="sucursal" EntitySet="sucursal" />
+          </AssociationSet>
+          <AssociationSet Name="FK__sucursal__idMuni__0DAF0CB0" Association="Self.FK__sucursal__idMuni__0DAF0CB0">
+            <End Role="municipio" EntitySet="municipio" />
+            <End Role="sucursal" EntitySet="sucursal" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ejemploEmpresaModelStoreContainer" CdmEntityContainer="ejemploEmpresaEntities">
+          <EntitySetMapping Name="cargo">
+            <EntityTypeMapping TypeName="ejemploEmpresaModel.cargo">
+              <MappingFragment StoreEntitySet="cargo">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="salario" ColumnName="salario" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="departamento">
+            <EntityTypeMapping TypeName="ejemploEmpresaModel.departamento">
+              <MappingFragment StoreEntitySet="departamento">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="empleado">
+            <EntityTypeMapping TypeName="ejemploEmpresaModel.empleado">
+              <MappingFragment StoreEntitySet="empleado">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="idCargo" ColumnName="idCargo" />
+                <ScalarProperty Name="cedula" ColumnName="cedula" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="apellido" ColumnName="apellido" />
+                <ScalarProperty Name="edad" ColumnName="edad" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="empresa">
+            <EntityTypeMapping TypeName="ejemploEmpresaModel.empresa">
+              <MappingFragment StoreEntitySet="empresa">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="municipio">
+            <EntityTypeMapping TypeName="ejemploEmpresaModel.municipio">
+              <MappingFragment StoreEntitySet="municipio">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="idDepartamento" ColumnName="idDepartamento" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sucursal">
+            <EntityTypeMapping TypeName="ejemploEmpresaModel.sucursal">
+              <MappingFragment StoreEntitySet="sucursal">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="idMunicipio" ColumnName="idMunicipio" />
+                <ScalarProperty Name="idEmpresa" ColumnName="idEmpresa" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

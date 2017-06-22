@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="7a8073742c7841b4a3317031970d1f71" Name="Diagram1">
+        <EntityTypeShape EntityType="ejemploEmpresaModel.cargo" Width="1.5" PointX="5.75" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ejemploEmpresaModel.departamento" Width="1.5" PointX="0.75" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ejemploEmpresaModel.empleado" Width="1.5" PointX="8" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ejemploEmpresaModel.empresa" Width="1.5" PointX="3" PointY="5.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ejemploEmpresaModel.municipio" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="ejemploEmpresaModel.sucursal" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
+        <AssociationConnector Association="ejemploEmpresaModel.FK__empleado__idCarg__1A14E395" ManuallyRouted="false" />
+        <AssociationConnector Association="ejemploEmpresaModel.FK__municipio__idDep__0519C6AF" ManuallyRouted="false" />
+        <AssociationConnector Association="ejemploEmpresaModel.FK__sucursal__idEmpr__0EA330E9" ManuallyRouted="false" />
+        <AssociationConnector Association="ejemploEmpresaModel.FK__sucursal__idMuni__0DAF0CB0" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
